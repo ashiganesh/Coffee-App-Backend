@@ -20,7 +20,8 @@ exports.signup = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const user = new data({ email, password: hashed });
     await user.save();
-    res.status(201).json({ message: 'Signup successful' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    res.status(201).json({ message: 'Signup successful' ,token});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
