@@ -15,16 +15,20 @@ router.post("/verifyotp",verifyOtp);
 
 router.post('/upload', auth, upload.single('file'), async (req, res) => {
   try {
-    const file = new information({
+    const{ name, description } = req.body;
+    
+    const product = new information({name,description,file:[{
+
       filename: req.file.filename,
       originalName: req.file.originalname,
       path: req.file.path,
       mimetype: req.file.mimetype,
       size: req.file.size,
       uploadedBy: req.user.userId, // from JWT
-    });
-    await file.save();
-    res.status(201).json({ message: 'File uploaded', file });
+
+    }]})
+    await product.save();
+    res.status(201).json({ message: 'File uploaded', product });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -51,3 +55,13 @@ router.get('/myfiles', async (req, res) => {
 
 
 module.exports = router;
+
+//upload.array('files', 5) // max 5 files, for example
+// for multiple files upload
+// files: req.files.map(file => ({
+//   filename: file.filename,
+//   originalName: file.originalname,
+//   path: file.path,
+//   mimetype: file.mimetype,
+//   size: file.size,
+// }))
