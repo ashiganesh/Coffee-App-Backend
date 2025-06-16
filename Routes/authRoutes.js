@@ -32,9 +32,17 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
 
 
 // Get files of logged-in user
-router.get('/myfiles', auth, async (req, res) => {
+// router.get('/myfiles', auth, async (req, res) => {
+//   try {
+//     const files = await information.find({ uploadedBy: req.user.userId });
+//     res.json(files);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+router.get('/myfiles', async (req, res) => {
   try {
-    const files = await information.find({ uploadedBy: req.user.userId });
+    const files = await information.find();
     res.json(files);
   } catch (err) {
     res.status(500).json({ error: err.message });
