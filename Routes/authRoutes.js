@@ -18,16 +18,16 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
     const{ name, description } = req.body;
     
     const product = new information({name,description
-    //   ,file:[{
+      ,file:[{
 
-    //   filename: req.file.filename,
-    //   originalName: req.file.originalname,
-    //   path: req.file.path,
-    //   mimetype: req.file.mimetype,
-    //   size: req.file.size,
-    //   uploadedBy: req.user.userId, // from JWT
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      path: req.file.path,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      uploadedBy: req.user.userId, // from JWT
 
-    // }]
+    }]
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', product });
