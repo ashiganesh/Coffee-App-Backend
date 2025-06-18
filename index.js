@@ -10,6 +10,7 @@ app.use(express.json());
  
 data();
 app.use("/",router);
+app.use('/uploads', express.static('uploads'));
 
 app.listen(process.env.PORT || 3000,()=>{
 console.log(`server running in port number ${process.env.PORT}`)
