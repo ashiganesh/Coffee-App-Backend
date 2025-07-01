@@ -3,6 +3,7 @@ const { signup, login, forgotPassword, verifyOtp } = require('../controllers/con
 const information = require('../models/files');
 const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const cloudinary = require('cloudinary').v2;
 
 const router = express.Router();
 
