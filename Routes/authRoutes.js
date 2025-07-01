@@ -14,26 +14,70 @@ router.post("/forgotpassword",forgotPassword);
 router.post("/verifyotp",verifyOtp);
 
 router.post('/upload', auth, upload.single('file'), async (req, res) => {
+  // try {
+  //   const{ name, description } = req.body;
+    
+  //   const product = new information({name,description
+  //     ,file:[{
+
+  //     filename: req.file.filename,
+  //     originalName: req.file.originalname,
+  //     path: req.file.path,
+  //     mimetype: req.file.mimetype,
+  //     size: req.file.size,
+  //     uploadedBy: req.user.userId, // from JWT
+
+  //   }]
+  // })
+  //   await product.save();
+  //   res.status(201).json({ message: 'File uploaded', product });
+  // } catch (err) {
+  //   res.status(500).json({ error: err.message });
+  // }
   try {
     const{ name, description } = req.body;
+
+     const b64 = Buffer.from(req.file.buffer).toString("base64");
+    const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: "uploads",
+    });
     
     const product = new information({name,description
-      ,file:[{
-
-      filename: req.file.filename,
-      originalName: req.file.originalname,
-      path: req.file.path,
-      mimetype: req.file.mimetype,
-      size: req.file.size,
-      uploadedBy: req.user.userId, // from JWT
-
-    }]
+      ,url:result.secure_url
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', product });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+
+//  try {
+  
+//     const b64 = Buffer.from(req.file.buffer).toString("base64");
+//     const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+
+//     // Upload to Cloudinary
+//     const result = await cloudinary.uploader.upload(dataURI, {
+//       folder: "uploads",
+//     });
+
+//     // Save URL to MongoDB
+//     const newImage = new Image({ url: result.secure_url });
+//     await newImage.save();
+
+//     res.status(200).json({ message: "Image uploaded", imageUrl: result.secure_url });
+//   } catch (err) {
+//     console.error("Upload error:", err);
+//     res.status(500).json({ error: "Upload failed" });
+//   }
+
+
+
+
+
 });
 
 
