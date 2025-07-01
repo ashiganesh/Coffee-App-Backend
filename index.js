@@ -14,9 +14,9 @@ app.use(express.json());
  
 data();
 cloudinary.config({
-  cloud_name: "dsx5f8jzm",
-  api_key: "665234862273299",
-  api_secret: "yf7wULxJFo1MU98mhdKGwJsJP4g",
+  cloud_name:CLOUDINARY_CLOUD_NAME,
+  api_key:CLOUDINARY_API_KEY,
+  api_secret:CLOUDINARY_API_SECRET
 });
 app.use("/",router);
 //app.use('/uploads', express.static('uploads'));
