@@ -36,7 +36,7 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
   //   res.status(500).json({ error: err.message });
   // }
   try {
-    const{ name, description } = req.body;
+    const{ name, description, category} = req.body;
 
      const b64 = Buffer.from(req.file.buffer).toString("base64");
     const dataURI = `data:${req.file.mimetype};base64,${b64}`;
@@ -47,11 +47,12 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
     });
     
     const product = new information({name,description
-      ,url:result.secure_url
+      ,url:result.secure_url,category
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', product });
-  } catch (err) {
+  } 
+  catch (err) {
     res.status(500).json({ error: err.message });
   }
 
@@ -92,12 +93,24 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
 //   }
 // });
 router.get('/myfiles', async (req, res) => {
+
   try {
-    const files = await information.find();
-    res.json(files);
+    const category = req.query.category;
+
+    const filter = category ? { category: category.toLowerCase() } : {};
+
+    const products = await information.find(filter);
+
+    res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+  // try {
+  //   const files = await information.find();
+  //   res.json(files);
+  // } catch (err) {
+  //   res.status(500).json({ error: err.message });
+  // }
 });
 
 
