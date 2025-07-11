@@ -1,6 +1,7 @@
 const express = require('express');
 const { signup, login, forgotPassword, verifyOtp } = require('../controllers/controllerAuth');
 const information = require('../models/files');
+const cartitems = require('../models/cartItems');
 const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 const cloudinary = require('cloudinary').v2;
@@ -83,15 +84,36 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
 });
 
 
-// Get files of logged-in user
-// router.get('/myfiles', auth, async (req, res) => {
-//   try {
-//     const files = await information.find({ uploadedBy: req.user.userId });
-//     res.json(files);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+
+
+router.post('/uploadcartitems', auth, async (req, res) => {
+  
+  try {
+    const{name,description,url, size, quantity} = req.body;
+
+    
+    
+    const product = new cartitems({name,description,url, size, quantity, uploadedBy: req.user.userId,});
+    await product.save();
+    res.status(201).json({ message: 'Product added to cart successfully', product });
+  } 
+  catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+//Get files of logged-in user
+router.get('/getcartitems', auth, async (req, res) => {
+  try {
+    const files = await cartitems.find({ uploadedBy: req.user.userId });
+    res.json(files);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 router.get('/myfiles', async (req, res) => {
 
   try {

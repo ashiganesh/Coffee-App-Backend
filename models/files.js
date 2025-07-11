@@ -5,7 +5,7 @@ const fileSchema = new mongoose.Schema({
   name: String,
   description: String,
   url: String,
-  category: String
+  category: String,
 //   file: [
 //   {
 //   filename: String,
@@ -13,7 +13,7 @@ const fileSchema = new mongoose.Schema({
 //   path: String,
 //   mimetype: String,
 //   size: Number,
-//   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+ //  uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 //   uploadedAt: { type: Date, default: Date.now }
 // }]
 });
