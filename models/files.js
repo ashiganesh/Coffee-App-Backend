@@ -5,6 +5,7 @@ const fileSchema = new mongoose.Schema({
   name: String,
   description: String,
   url: String,
+  price:Number,
   category: String,
 //   file: [
 //   {

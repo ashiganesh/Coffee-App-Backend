@@ -17,7 +17,7 @@ const cartSchema = new mongoose.Schema({
 //   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 //   uploadedAt: { type: Date, default: Date.now }
 // }
-
+price:Number,
 size:String,
 quantity:Number,
 uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

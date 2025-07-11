@@ -37,7 +37,7 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
   //   res.status(500).json({ error: err.message });
   // }
   try {
-    const{ name, description, category} = req.body;
+    const{ name, description, price ,category} = req.body;
 
      const b64 = Buffer.from(req.file.buffer).toString("base64");
     const dataURI = `data:${req.file.mimetype};base64,${b64}`;
@@ -47,8 +47,8 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
       folder: "uploads",
     });
     
-    const product = new information({name,description
-      ,url:result.secure_url,category
+    const product = new information({name, description
+      ,url:result.secure_url, price ,category
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', product });
@@ -89,11 +89,11 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
 router.post('/uploadcartitems', auth, async (req, res) => {
   
   try {
-    const{name,description,url, size, quantity} = req.body;
+    const{name,description,url,price, size, quantity} = req.body;
 
     
     
-    const product = new cartitems({name,description,url, size, quantity, uploadedBy: req.user.userId,});
+    const product = new cartitems({name,description,url,price, size, quantity, uploadedBy: req.user.userId,});
     await product.save();
     res.status(201).json({ message: 'Product added to cart successfully', product });
   } 
