@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 const cloudinary = require('cloudinary').v2;
 
-const router = express.Router();
+const router = express.Router(); 
 
 
 
@@ -37,7 +37,19 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
   //   res.status(500).json({ error: err.message });
   // }
   try {
-    const{ name, description, price ,category} = req.body;
+    const{
+ name,
+  brand,
+  description,
+   image,
+  price,
+  originalPrice,
+  discount,
+  sizes,
+  selectedSize,
+  rating,
+  reviewsCount,
+ } = req.body;
 
      const b64 = Buffer.from(req.file.buffer).toString("base64");
     const dataURI = `data:${req.file.mimetype};base64,${b64}`;
@@ -47,8 +59,8 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
       folder: "uploads",
     });
     
-    const product = new information({name, description
-      ,url:result.secure_url, price ,category
+    const product = new information({name,brand, description
+      ,image:result.secure_url, price ,originalPrice,discount,sizes,selectedSize,rating,reviewsCount
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', product });
@@ -116,24 +128,43 @@ router.get('/getcartitems', auth, async (req, res) => {
 
 router.get('/myfiles', async (req, res) => {
 
-  try {
-    const category = req.query.category;
-
-    const filter = category ? { category: category.toLowerCase() } : {};
-
-    const products = await information.find(filter);
-
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
   // try {
-  //   const files = await information.find();
-  //   res.json(files);
+  //   const category = req.query.category;
+
+  //   const filter = category ? { category: category.toLowerCase() } : {};
+
+  //   const products = await information.find(filter);
+
+  //   res.status(200).json(products);
   // } catch (err) {
   //   res.status(500).json({ error: err.message });
   // }
+
+
+
+  try {
+    const files = await information.find();
+    res.json(files);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+
+
+
+router.get("/myfiles/:id", async (req, res) => {
+  try {
+    const product = await information.findById(req.params.id);
+    if (!product) return res.status(404).json({ success: false, message: "Product not found" });
+    res.json({ success: true, data: product });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+
+
 
 
 module.exports = router;
