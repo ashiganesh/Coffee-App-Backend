@@ -20,14 +20,14 @@ const fileSchema = new mongoose.Schema({
 
 
  name: { type: String, required: true },
-  brand: { type: String },
+  hashtag: { type: String },
   description: { type: String },
     image: { type: String },
   price: { type: Number, required: true },
   originalPrice: { type: Number },
   discount: { type: String },
   sizes: [{ type: String }],
-  selectedSize: { type: String },
+  productDetails: { type: String },
   rating: { type: Number, default: 0 },
   reviewsCount: { type: Number, default: 0 },
 
