@@ -63,7 +63,7 @@ router.post('/upload', auth, upload.single('file'), async (req, res) => {
       image:result.secure_url, price ,originalPrice,discount,sizes,productDetails,rating,reviewsCount
   })
     await product.save();
-    res.status(201).json({ message: 'File uploaded', product });
+    res.status(201).json({ message: 'File uploaded', products: product });
   } 
   catch (err) {
     res.status(500).json({ error: err.message });
@@ -144,7 +144,7 @@ router.get('/myfiles', async (req, res) => {
 
   try {
     const files = await information.find();
-    res.json(files);
+    res.json({message:"Data fetched successfully",data: files});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
