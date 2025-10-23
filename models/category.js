@@ -10,7 +10,7 @@ const fileSchema = new mongoose.Schema({
 
 });
 
-const categorySection = mongoose.model('File', fileSchema);
+const categorySection = mongoose.model('Category', fileSchema);
 
 module.exports = categorySection;
 
