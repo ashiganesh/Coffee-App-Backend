@@ -194,6 +194,40 @@ router.get("/categoryget", async (req, res) => {
 
 
 
+//  EDIT MYFILES
+
+
+router.put("/myfiles/edit/:id", async (req, res) => {
+  try {
+
+ const { id } = req.params.id; // get id from URL
+    const updateData = req.body; // data sent from frontend (Flutter, Postman, etc.)
+
+   
+
+    // Find and update
+    const updatedFile = await File.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!updatedFile) return res.status(404).json({ message: 'File not found' });
+
+    res.status(200).json({
+      message: 'File updated successfully',
+      file: updatedFile,
+    });
+
+
+
+
+
+
+    
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+
+
 
 
 module.exports = router;
