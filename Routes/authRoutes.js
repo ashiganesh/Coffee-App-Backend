@@ -206,7 +206,7 @@ router.put("/myfiles/edit/:id", async (req, res) => {
    
 
     // Find and update
-    const updatedFile = await File.findByIdAndUpdate(id, updateData, { new: true });
+    const updatedFile = await information.findByIdAndUpdate(id, updateData, { new: true });
 
     if (!updatedFile) return res.status(404).json({ message: 'File not found' });
 
