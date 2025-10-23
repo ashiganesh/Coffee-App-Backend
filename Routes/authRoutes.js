@@ -4,6 +4,7 @@ const information = require('../models/files');
 const cartitems = require('../models/cartItems');
 const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const categorySection = require('../models/category');
 const cloudinary = require('cloudinary').v2;
 
 const router = express.Router(); 
@@ -115,6 +116,23 @@ router.post('/uploadcartitems', auth, async (req, res) => {
 });
 
 
+router.post('/uploadcart', auth, async (req, res) => {
+  
+  try {
+    const{category,image} = req.body;
+
+    
+    
+    const product = new categorySection({category,image});
+    await product.save();
+    res.status(201).json({ message: 'Cart added successfully', data:product });
+  } 
+  catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 //Get files of logged-in user
 router.get('/getcartitems', auth, async (req, res) => {
   try {
@@ -151,13 +169,24 @@ router.get('/myfiles', async (req, res) => {
 });
 
 
-
+//
 
 router.get("/myfiles/:id", async (req, res) => {
   try {
     const product = await information.findById(req.params.id);
     if (!product) return res.status(404).json({ success: false, message: "Product not found" });
     res.json({ success: true, data: product });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+
+router.get("/categoryget", async (req, res) => {
+  try {
+    const product = await categorySection.find();
+   
+    res.json({message:"Category found", success: true, data: product });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
