@@ -200,7 +200,7 @@ router.get("/categoryget", async (req, res) => {
 router.put("/myfiles/edit/:id", async (req, res) => {
   try {
 
- const { id } = req.params.id; // get id from URL
+ const { id } = req.params; // get id from URL
     const updateData = req.body; // data sent from frontend (Flutter, Postman, etc.)
 
    
