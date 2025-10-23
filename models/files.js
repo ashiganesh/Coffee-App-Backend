@@ -23,7 +23,7 @@ const fileSchema = new mongoose.Schema({
   hashtag: { type: String },
   description: { type: String },
     image: { type: String },
-  price: { type: Number, required: true },
+  //price: { type: Number, required: true },
   originalPrice: { type: Number },
   discount: { type: String },
   sizes: [{ type: String }],
