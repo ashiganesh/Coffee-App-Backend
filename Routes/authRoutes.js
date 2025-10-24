@@ -17,7 +17,7 @@ router.post("/forgotpassword",forgotPassword);
 router.post("/verifyotp",verifyOtp);
 
 //router.post('/upload', auth, upload.single('file'), async (req, res) => {
-router.post('/upload', auth, upload.single('file'), async (req, res) => {
+router.post('/upload',upload.single('file'), async (req, res) => {
   // try {
   //   const{ name, description } = req.body;
     
