@@ -21,6 +21,7 @@ const fileSchema = new mongoose.Schema({
 
  name: { type: String, required: true },
   hashtag: { type: String },
+  catrgory: { type: String },
   description: { type: String },
     image: { type: String },
   //price: { type: Number, required: true },

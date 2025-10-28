@@ -42,6 +42,7 @@ router.post('/upload',upload.single('file'), async (req, res) => {
     const{
  name,
    hashtag,
+   category,
   description,
    image,
 
@@ -61,7 +62,7 @@ router.post('/upload',upload.single('file'), async (req, res) => {
       folder: "uploads",
     });
     
-    const product = new information({name,hashtag, description,
+    const product = new information({name,hashtag,category, description,
       image:result.secure_url,originalPrice,discount,sizes,productDetails,rating,reviewsCount
   })
     await product.save();
