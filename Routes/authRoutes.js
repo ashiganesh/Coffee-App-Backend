@@ -48,7 +48,7 @@ router.post('/upload',upload.single('file'), async (req, res) => {
 
   originalPrice,
   discount,
-  sizes,
+
   productDetails,
   rating,
   reviewsCount,
@@ -63,7 +63,7 @@ router.post('/upload',upload.single('file'), async (req, res) => {
     });
     
     const product = new information({name,hashtag,category, description,
-      image:result.secure_url,originalPrice,discount,sizes,productDetails,rating,reviewsCount
+      image:result.secure_url,originalPrice,discount,productDetails,rating,reviewsCount
   })
     await product.save();
     res.status(201).json({ message: 'File uploaded', products: product });

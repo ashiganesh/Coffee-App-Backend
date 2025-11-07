@@ -27,7 +27,7 @@ const fileSchema = new mongoose.Schema({
   //price: { type: Number, required: true },
   originalPrice: { type: Number },
   discount: { type: String },
-  sizes: [{ type: String }],
+ // sizes: [{ type: String }],
   productDetails: { type: String },
   rating: { type: Number, default: 0 },
   reviewsCount: { type: Number, default: 0 },
